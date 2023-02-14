@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:plannurx_lite/popups/add_task.dart';
+
+import '../widgets/task_tile.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -12,8 +15,7 @@ class TaskScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 60, left: 30, right: 30, bottom: 30),
+              padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
@@ -48,6 +50,14 @@ class TaskScreen extends StatelessWidget {
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     color: Colors.white),
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: 1500,
+                    itemBuilder: (BuildContext context, int index) {
+                      return TaskTile(
+                        index: index,
+                      );
+                    }),
               ),
             ),
           ],
@@ -56,7 +66,19 @@ class TaskScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            useSafeArea: true,
+            builder: (context) => const AddTaskPopup(),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
