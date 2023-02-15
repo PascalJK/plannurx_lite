@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plannurx_lite/popups/add_task.dart';
 
-import '../widgets/task_tile.dart';
+import '../widgets/tasks_list.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -50,14 +50,7 @@ class TaskScreen extends StatelessWidget {
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     color: Colors.white),
-                child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: 1500,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TaskTile(
-                        index: index,
-                      );
-                    }),
+                child: const TasksList(),
               ),
             ),
           ],
