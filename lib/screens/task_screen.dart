@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:plannurx_lite/controllers/task_controller.dart';
 import 'package:plannurx_lite/popups/add_task.dart';
+import 'package:provider/provider.dart';
 
-import '../Models/task.dart';
 import '../widgets/tasks_list.dart';
 
-class TaskScreen extends StatefulWidget {
+class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
 
   @override
-  State<TaskScreen> createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
-  List<Task> tasks = [];
-
-  @override
   Widget build(BuildContext context) {
+    var taskController = context.watch<TaskController>();
+
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       body: SafeArea(
@@ -45,7 +41,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    "${tasks.length} Tasks",
+                    "${taskController.tasksCount} Tasks",
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
@@ -58,10 +54,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     color: Colors.white),
-                child: TasksList(
-                  tasks: tasks,
-                  checkboxCallback: () => setState(() {}),
-                ),
+                child: const TasksList(),
               ),
             ),
           ],
@@ -75,12 +68,7 @@ class _TaskScreenState extends State<TaskScreen> {
             context: context,
             isScrollControlled: true,
             useSafeArea: true,
-            builder: (context) => AddTaskPopup(
-              onTaskAdded: (task) {
-                tasks.add(task);
-                setState(() {});
-              },
-            ),
+            builder: (context) => AddTaskPopup(),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(20),

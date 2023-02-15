@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:plannurx_lite/Models/task.dart';
+import 'package:plannurx_lite/controllers/task_controller.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskPopup extends StatelessWidget {
-  AddTaskPopup({super.key, required this.onTaskAdded});
+  AddTaskPopup({super.key});
 
-  final Function(Task task) onTaskAdded;
   final taskTextController = TextEditingController();
 
   void addNewTask(BuildContext context) {
     var task = Task(task: taskTextController.text.trim());
     taskTextController.clear();
-    onTaskAdded(task);
+    context.read<TaskController>().addTask(task);
     Navigator.pop(context);
   }
 
