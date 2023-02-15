@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:plannurx_lite/Models/task.dart';
 
 class AddTaskPopup extends StatelessWidget {
-  const AddTaskPopup({super.key});
+  AddTaskPopup({super.key, required this.onTaskAdded});
+
+  final Function(Task task) onTaskAdded;
+  final taskTextController = TextEditingController();
+
+  void addNewTask(BuildContext context) {
+    var task = Task(task: taskTextController.text.trim());
+    taskTextController.clear();
+    onTaskAdded(task);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +36,17 @@ class AddTaskPopup extends StatelessWidget {
             ),
             TextField(
               autofocus: true,
+              controller: taskTextController,
               minLines: 1,
               maxLines: 5,
               keyboardType: TextInputType.multiline,
-              style: TextStyle(),
-              decoration: InputDecoration(hintText: "Write your task here.."),
+              style: const TextStyle(),
+              decoration:
+                  const InputDecoration(hintText: "Write your task here.."),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => addNewTask(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
                 textStyle: const TextStyle(fontSize: 25),

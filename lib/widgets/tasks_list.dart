@@ -3,26 +3,28 @@ import 'package:plannurx_lite/Models/task.dart';
 
 import 'task_tile.dart';
 
-class TasksList extends StatefulWidget {
+class TasksList extends StatelessWidget {
   const TasksList({
     super.key,
+    required this.tasks,
+    required this.checkboxCallback,
   });
 
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
+  final List<Task> tasks;
+  final VoidCallback checkboxCallback;
 
-class _TasksListState extends State<TasksList> {
-  List<Task> tasks = [];
-  
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: 1500,
-      itemBuilder: (BuildContext context, int index) {
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
         return TaskTile(
-          index: index,
+          task: tasks[index],
+          checkboxCallback: (value) {
+            tasks[index].toggleDone();
+            checkboxCallback();
+          },
         );
       },
     );

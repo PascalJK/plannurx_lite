@@ -1,50 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:plannurx_lite/Models/task.dart';
 
-class TaskTile extends StatefulWidget {
+class TaskTile extends StatelessWidget {
   const TaskTile({
     super.key,
-    required this.index,
+    required this.task,
+    required this.checkboxCallback,
   });
-  final int index;
-
-  @override
-  State<TaskTile> createState() => _TaskTileState();
-}
-
-class _TaskTileState extends State<TaskTile> {
-  bool isChecked = false;
+  final Task task;
+  final Function(bool? value) checkboxCallback;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        "List item ${widget.index}",
+        task.task,
         style: TextStyle(
-            decoration: isChecked ? TextDecoration.lineThrough : null),
+            decoration: task.isDone ? TextDecoration.lineThrough : null),
       ),
-      trailing: TextCheckbox(
-        checkboxState: isChecked,
-        toggleCheckboxState: (value) => setState(() => isChecked = value!),
+      trailing: Checkbox(
+        activeColor: Colors.lightBlueAccent,
+        value: task.isDone,
+        onChanged: checkboxCallback,
       ),
-    );
-  }
-}
-
-class TextCheckbox extends StatelessWidget {
-  const TextCheckbox(
-      {super.key,
-      required this.checkboxState,
-      required this.toggleCheckboxState});
-
-  final bool checkboxState;
-  final Function(bool? value) toggleCheckboxState;
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      activeColor: Colors.lightBlueAccent,
-      value: checkboxState,
-      onChanged: toggleCheckboxState,
     );
   }
 }

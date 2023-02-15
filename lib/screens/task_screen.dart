@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:plannurx_lite/popups/add_task.dart';
 
+import '../Models/task.dart';
 import '../widgets/tasks_list.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
+
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+  List<Task> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +26,8 @@ class TaskScreen extends StatelessWidget {
               padding: const EdgeInsets.all(30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CircleAvatar(
+                children: [
+                  const CircleAvatar(
                     backgroundColor: Colors.white,
                     child: Icon(
                       Icons.list,
@@ -28,8 +36,8 @@ class TaskScreen extends StatelessWidget {
                     ),
                     // radius: 30,
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     "Plannur-X",
                     style: TextStyle(
                         color: Colors.white,
@@ -37,8 +45,8 @@ class TaskScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    "12 Tasks",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    "${tasks.length} Tasks",
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
               ),
@@ -50,7 +58,10 @@ class TaskScreen extends StatelessWidget {
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20)),
                     color: Colors.white),
-                child: const TasksList(),
+                child: TasksList(
+                  tasks: tasks,
+                  checkboxCallback: () => setState(() {}),
+                ),
               ),
             ),
           ],
@@ -64,7 +75,12 @@ class TaskScreen extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             useSafeArea: true,
-            builder: (context) => const AddTaskPopup(),
+            builder: (context) => AddTaskPopup(
+              onTaskAdded: (task) {
+                tasks.add(task);
+                setState(() {});
+              },
+            ),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(20),
