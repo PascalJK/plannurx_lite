@@ -21,8 +21,8 @@ class TasksList extends StatelessWidget {
         Task taskIndex = taskController.getTasks[index];
         return TaskTile(
           task: taskIndex,
-          checkboxCallback: (value) =>
-              taskController.updateTask(taskIndex),
+          checkboxCallback: (value) => taskController.updateTask(taskIndex),
+          longPressCallback: () => taskController.deleteTask(taskIndex),
         );
       },
     );
