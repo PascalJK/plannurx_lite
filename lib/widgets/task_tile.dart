@@ -18,7 +18,7 @@ class TaskTile extends StatelessWidget {
     return ListTile(
       onLongPress: longPressCallback,
       title: Text(
-        task.task,
+        task.title,
         style: TextStyle(
             decoration: task.isDone ? TextDecoration.lineThrough : null),
       ),
